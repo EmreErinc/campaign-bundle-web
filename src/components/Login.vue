@@ -10,7 +10,7 @@
             :type="'password'"
             label="Parola"
           ></v-text-field>
-          <v-btn v-on:click="login()" class="ma-2" outlined color="indigo">Giriş</v-btn>
+          <v-btn v-on:click="login()" class="ma-2" outlined color="indigo">Login</v-btn>
         </v-form>
       </v-flex>
       <v-flex xs12></v-flex>

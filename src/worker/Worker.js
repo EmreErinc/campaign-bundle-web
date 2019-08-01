@@ -1,4 +1,5 @@
 import axios from 'axios';
+var Cookies = require('js-cookie');
 
 const BASE_URL = "http://localhost:8080";
 
@@ -13,8 +14,8 @@ export default {
         .then(res => console.log(res))
         .then(res => {
           if (res.status == 200) {
-            $cookies.set("session", res.data.token);
-            cookies.config("7d");
+            Cookies.set("session", res.data.token);
+            Cookies.config("7d");
           }
         });
     },
@@ -30,7 +31,13 @@ export default {
 
       axios
         .post(url, request)
-        .then(res => console.log(res));
+        .then(res => console.log(res))
+        .then(res => {
+          if (res.status == 200) {
+            Cookies.set("session", res.data.token);
+            Cookies.config("7d");
+          }
+        });
     },
     addSeller(request) {
       const url = `${BASE_URL}/seller`;
@@ -38,7 +45,7 @@ export default {
       axios
         .post(url, request, {
           headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
+            "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
         .then(res => console.log(res));
@@ -49,7 +56,7 @@ export default {
       axios
         .get(url, {
           headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
+            "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
         .then(res => console.log(res));
@@ -60,7 +67,7 @@ export default {
       axios
         .post(url, request, {
           headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
+            "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
         .then(res => console.log(res));
@@ -71,7 +78,7 @@ export default {
       axios
         .post(url, request, {
           headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
+            "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
         .then(res => console.log(res));
@@ -82,7 +89,7 @@ export default {
       axios
         .post(url, request, {
           headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
+            "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
         .then(res => console.log(res));
@@ -93,7 +100,7 @@ export default {
       axios
         .post(url, request, {
           headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
+            "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
         .then(res => console.log(res));
@@ -104,7 +111,7 @@ export default {
       axios
         .post(url, {
           headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
+            "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
         .then(res => console.log(res));
@@ -115,7 +122,7 @@ export default {
       axios
         .post(url, request, {
           headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
+            "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
         .then(res => console.log(res));
@@ -148,43 +155,61 @@ export default {
       axios
         .post(url, request, {
           headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
+            "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
         .then(res => console.log(res));
     },
-    getItems() {
+    async getItems() {
       const url = `${BASE_URL}/item`;
 
-      axios
-        .get(url, {
-          headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
-          }
-        })
-        .then(res => console.log(res));
+      if (Cookies.get("session") != null) {
+        return await axios
+          .get(url, {
+            headers: {
+              "Authorization": `Bearer ${Cookies.get("session")}`
+            }
+          })
+          .then(res => res.data);
+      } else {
+        return await axios
+          .get(url)
+          .then(res => res.data);
+      }
     },
-    getSellerItems(id) {
+    async getSellerItems(id) {
       const url = `${BASE_URL}/item/seller/${id}`;
 
-      axios
-        .get(url, {
-          headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
-          }
-        })
-        .then(res => console.log(res));
+      if (Cookies.get("session") != null) {
+        return await axios
+          .get(url, {
+            headers: {
+              "Authorization": `Bearer ${Cookies.get("session")}`
+            }
+          })
+          .then(res => res.data);
+      } else {
+        return await axios
+          .get(url)
+          .then(res => res.data);
+      }
     },
-    getItemDetail(id) {
+    async getItemDetail(id) {
       const url = `${BASE_URL}/item/${id}`;
 
-      axios
-        .get(url, {
-          headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
-          }
-        })
-        .then(res => console.log(res));
+      if (Cookies.get("session") != null) {
+        return await axios
+          .get(url, {
+            headers: {
+              "Authorization": `Bearer ${Cookies.get("session")}`
+            }
+          })
+          .then(res => res.data);
+      } else {
+        return await axios
+          .get(url)
+          .then(res => res.data);
+      }
     },
     getItemStock(id) {
       const url = `${BASE_URL}/stock/${id}`;
@@ -192,7 +217,7 @@ export default {
       axios
         .get(url, {
           headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
+            "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
         .then(res => console.log(res));
@@ -203,7 +228,7 @@ export default {
       axios
         .post(url, request, {
           headers: {
-            "Authorization": `Bearer ${$cookies.get("session")}`
+            "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
         .then(res => console.log(res));

@@ -1,28 +1,10 @@
 <template>
-  <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Campaign Bundle</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-app-bar>
-
-    <v-content>
-      <login></login>
-    </v-content>
-  </v-app>
+  <div id="app">
+    <!-- <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/login">Login</router-link> | 
+      <router-link to="/register">Register</router-link>
+    </div> -->
+    <router-view/>
+  </div>
 </template>
-
-<script>
-import Login from "./components/Login.vue";
-
-export default {
-  name: "App",
-  components: {
-    Login
-  },
-  data: () => ({
-    //
-  })
-};
-</script>

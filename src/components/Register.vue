@@ -3,6 +3,8 @@
     <v-layout wrap>
       <v-flex xs12 sm6>
         <v-form>
+          <v-text-field class="input-group--focused" v-model="name" label="Name"></v-text-field>
+          <v-text-field class="input-group--focused" v-model="lastName" label="Last Name"></v-text-field>
           <v-text-field class="input-group--focused" v-model="email" label="Mail"></v-text-field>
           <v-text-field
             class="input-group--focused"
@@ -10,7 +12,7 @@
             :type="'password'"
             label="Parola"
           ></v-text-field>
-          <v-btn v-on:click="login()" class="ma-2" outlined color="indigo">Giriş</v-btn>
+          <v-btn v-on:click="register()" class="ma-2" outlined color="indigo">Register</v-btn>
         </v-form>
       </v-flex>
       <v-flex xs12></v-flex>
@@ -24,13 +26,21 @@ import Worker from "../worker/Worker.js";
 export default {
   name: "register",
   data: () => ({
+    name: "",
+    lastName: "",
     email: "",
-    password: "",
-    show: false
+    password: ""
   }),
   methods: {
-    login() {
-        Worker.methods.login(this.email, this.password);
+    register() {
+      var request = {
+        name: this.name,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password
+      };
+
+      Worker.methods.register(request);
     }
   }
 };
