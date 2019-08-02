@@ -1,7 +1,7 @@
 <template>
   <div class="grey lighten-3">
     <template v-for="(item,index) in itemList" xs3>
-      <item-summary :item="item" :index="index" :key="`${item}`"></item-summary>
+      <item-summary :item="item" :index="index" :key="`3${item}`"></item-summary>
     </template>
     <v-divider light></v-divider>
   </div>

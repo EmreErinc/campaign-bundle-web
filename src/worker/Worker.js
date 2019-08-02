@@ -26,16 +26,15 @@ export default {
         .post(url, request)
         .then(res => console.log(res));
     },
-    login(request) {
+    async login(request) {
       const url = `${BASE_URL}/login`;
 
-      axios
+      await axios
         .post(url, request)
-        .then(res => console.log(res))
         .then(res => {
           if (res.status == 200) {
             Cookies.set("session", res.data.token);
-            Cookies.config("7d");
+            //Cookies.config("7d");
           }
         });
     },
@@ -50,16 +49,16 @@ export default {
         })
         .then(res => console.log(res));
     },
-    getUserCart() {
+    async getUserCart() {
       const url = `${BASE_URL}/cart`;
 
-      axios
+      return await axios
         .get(url, {
           headers: {
             "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
-        .then(res => console.log(res));
+        .then(res => res.data.itemList);
     },
     addItemToCart(request) {
       const url = `${BASE_URL}/cart/add`;
@@ -72,38 +71,38 @@ export default {
         })
         .then(res => console.log(res));
     },
-    incrementItemCountOnCart(request) {
+    async incrementItemCountOnCart(request) {
       const url = `${BASE_URL}/cart/inc`;
 
-      axios
+      return await axios
         .post(url, request, {
           headers: {
             "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
-        .then(res => console.log(res));
+        .then(res => res.data.itemList);
     },
-    decrementItemCountOnCart(request) {
+    async decrementItemCountOnCart(request) {
       const url = `${BASE_URL}/cart/dec`;
 
-      axios
+      return await axios
         .post(url, request, {
           headers: {
             "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
-        .then(res => console.log(res));
+        .then(res => res.data.itemList);
     },
-    removeFromCart(request) {
+    async removeFromCart(request) {
       const url = `${BASE_URL}/cart/remove`;
 
-      axios
+      return await axios
         .post(url, request, {
           headers: {
             "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
-        .then(res => console.log(res));
+        .then(res => res.data.itemList);
     },
     sale() {
       const url = `${BASE_URL}/sale`;
@@ -113,8 +112,7 @@ export default {
           headers: {
             "Authorization": `Bearer ${Cookies.get("session")}`
           }
-        })
-        .then(res => console.log(res));
+        });
     },
     addCampaign(request) {
       const url = `${BASE_URL}/campaign`;

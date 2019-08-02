@@ -10,11 +10,19 @@
       <span>Take {{item.badge.requirement}} Gift {{item.badge.gift}}</span>
     </v-card-text>
     <v-card-actions style="text-align: center">
-      <v-btn :to="getItemDetail(parseInt(item.id))" outlined large>Product Detail</v-btn>
-      <!-- <detail v-bind="item" :id="parseInt(item.id)" :index="parseInt(index)"></detail> -->
-      <nav>
-        <router-link :to="{ path: `/item/${item.id}`, props: { id: item.id, index: index }}">detail</router-link>
-      </nav>
+      <!-- <v-btn v-on:click="getDetail(item.id, index)" outlined large>btn-detail</v-btn> -->
+      <v-btn
+        :to="{ path: '/item/' + item.id }"
+        v-bind:id="item.id" v-bind:index="index"
+        outlined
+        large
+      >Product Detail</v-btn>
+      <!-- <detail v-bind:id="item.id" v-bind:index="index"></detail> -->
+      <!-- <nav>
+        <router-link
+          :to="{path: `/item/${item.id}`, props: { id: item.id, index: index }} "
+        >detail</router-link>
+      </nav>-->
     </v-card-actions>
   </v-card>
 </template>
@@ -33,17 +41,18 @@ export default {
     index: { type: Number }
   },
   methods: {
-    //itemDetail(id) {
-    //  Worker.methods.getItemDetail(id).then(res => console.log(res));
-    //},
     hasCampaign(badge) {
       if (!isNullOrUndefined(badge.requirement)) {
         return true;
       }
     },
-    getItemDetail(id) {
-      return `/item/${id}`;
-    }
+    getDetail(id, index) {
+      this.$router.push({
+        path: `/item/${id}`,
+        name: "detail",
+        props: { id: id, index: index }
+      });
+    },
   }
 };
 </script>

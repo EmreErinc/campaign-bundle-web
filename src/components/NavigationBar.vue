@@ -26,11 +26,16 @@ export default {
         },
         {
           id: 1,
+          text: 'Cart',
+          page:'/cart'
+        },
+        {
+          id: 2,
           text: 'Login',
           page:'/login'
         },
         {
-          id: 2,
+          id: 3,
           text: 'Register',
           page:'/register'
         }
