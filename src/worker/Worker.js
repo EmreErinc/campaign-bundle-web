@@ -6,16 +6,17 @@ const BASE_URL = "http://localhost:8080";
 export default {
 
   methods: {
-    register(request) {
+    async register(request) {
       const url = `${BASE_URL}/register`;
 
-      axios
+      return await axios
         .post(url, request)
         .then(res => console.log(res))
         .then(res => {
           if (res.status == 200) {
-            Cookies.set("session", res.data.token);
-            Cookies.config("7d");
+            //Cookies.set("session", res.data.token);
+            //Cookies.config("7d");
+            return res;
           }
         });
     },
@@ -29,12 +30,13 @@ export default {
     async login(request) {
       const url = `${BASE_URL}/login`;
 
-      await axios
+      return await axios
         .post(url, request)
         .then(res => {
           if (res.status == 200) {
-            Cookies.set("session", res.data.token);
-            //Cookies.config("7d");
+            //var token = res.data.token;
+            //Cookies.set("session", token);
+            return res;
           }
         });
     },
@@ -58,7 +60,7 @@ export default {
             "Authorization": `Bearer ${Cookies.get("session")}`
           }
         })
-        .then(res => res.data.itemList);
+        .then(res => res);
     },
     addItemToCart(request) {
       const url = `${BASE_URL}/cart/add`;
@@ -107,8 +109,10 @@ export default {
     sale() {
       const url = `${BASE_URL}/sale`;
 
+      var request = {}
+
       axios
-        .post(url, {
+        .post(url, request, {
           headers: {
             "Authorization": `Bearer ${Cookies.get("session")}`
           }
@@ -147,10 +151,10 @@ export default {
         })
         .then(res => console.log(res));
     },
-    addItem(request) {
+    async addItem(request) {
       const url = `${BASE_URL}/item`;
 
-      axios
+      await axios
         .post(url, request, {
           headers: {
             "Authorization": `Bearer ${Cookies.get("session")}`

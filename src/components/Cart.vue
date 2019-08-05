@@ -4,13 +4,13 @@
       <v-card dark color="blue-grey darken-2" :key="`${cartItem}`">
         <v-card-title primary-title>
           <div>
-            <div class="headline">{{cartItem.productId}}</div>
+            <div class="headline">{{cartItem.productName}}</div>
             <span class="addition">Count : {{cartItem.saleCount}}</span>
             <span class="addition">Price : {{cartItem.price}} TL</span>
           </div>
         </v-card-title>
         <v-card-text v-if="hasCampaign(cartItem)">
-          <span>Your Earned Gift Count : {{cartItem.campaignParams.actualGiftCount}} -</span>
+          <span>Your Earned Gift Count : {{cartItem.campaignParams.actualGiftCount}} </span><br/><br/>
           <span>Badge : Take {{cartItem.campaignParams.badge.requirement}} Gift {{cartItem.campaignParams.badge.gift}}</span>
         </v-card-text>
         <v-card-actions style="text-align: center">
@@ -18,6 +18,9 @@
           <v-btn v-on:click="incrementItemCount(cartItem)" outlined large>Increment</v-btn>
           <v-btn v-on:click="removeItem(cartItem)" outlined large>Remove</v-btn>
         </v-card-actions>
+        <v-card-text v-if="hasMessage(cartItem)">
+          <span>Message : {{cartItem.message}} </span><br/>
+        </v-card-text>
       </v-card>
     </template>
     <v-card-actions style="text-align: center">
@@ -40,6 +43,9 @@ export default {
   methods: {
     hasCampaign(cartItem) {
       return cartItem.hasCampaign;
+    },
+    hasMessage(cartItem){
+      return cartItem.message == "" ? false : true;
     },
     decrementItemCount(cartItem) {
       var request = {
@@ -80,9 +86,8 @@ export default {
   },
   created() {
     Worker.methods.getUserCart().then(res => {
-      console.log(res);
-      this.cartItems = res;
-    });
+      this.cartItems = res.data.itemList;
+    }).catch((res) => alert(res.data.message));
   }
 };
 </script>

@@ -4,6 +4,11 @@ import vuetify from './plugins/vuetify';
 import store from './store'
 import router from './router'
 
+import VDateRange from 'vuetify-daterange-picker';
+import 'vuetify-daterange-picker/dist/vuetify-daterange-picker.css';
+
+Vue.use(VDateRange);
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -5,6 +5,9 @@ import Login from './views/LoginPage.vue';
 import Register from './views/RegisterPage.vue';
 import Detail from './views/DetailPage.vue';
 import Cart from './views/CartPage.vue';
+import AddProduct from './views/AddProductPage.vue';
+import AddCampaign from './views/AddCampaignPage.vue';
+import LogOut from './components/LogOut.vue';
 
 Vue.use(Router)
 
@@ -44,6 +47,21 @@ export default new Router({
       //component: () => import('./views/DetailPage.vue')
       //component: (resolve) => require(['./views/DetailPage.vue'], m => resolve(m.default))
 
-    }
+    },
+    {
+      path: '/addProduct',
+      name: 'addProduct',
+      component: AddProduct,
+    },
+    {
+      path: '/addCampaign',
+      name: 'addCampaign',
+      component: AddCampaign,
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: LogOut,
+    },
   ]
 })

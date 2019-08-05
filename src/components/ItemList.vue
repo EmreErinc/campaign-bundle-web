@@ -1,8 +1,12 @@
 <template>
   <div class="grey lighten-3">
-    <template v-for="(item,index) in itemList" xs3>
-      <item-summary :item="item" :index="index" :key="`3${item}`"></item-summary>
-    </template>
+    <v-container grid-list-md text-center>
+      <v-layout wrap>
+        <v-flex v-for="(item,index) in itemList" :key="`3${item}`" xs5 sm4 md3>
+          <item-summary :item="item" :index="index"></item-summary>
+        </v-flex>
+      </v-layout>
+    </v-container>
     <v-divider light></v-divider>
   </div>
 </template>
@@ -19,10 +23,26 @@ export default {
   components: {
     ItemSummary
   },
+  methods: {
+    isUser() {
+      return this.$store.getters.getRole == "USER" ? true : false;
+    },
+    isSeller() {
+      return;
+    }
+  },
   created() {
-    Worker.methods.getItems().then(res => {
-      this.itemList = res;
-    });
+    var isSeller = this.$store.getters.getRole == "SELLER" ? true : false;
+    var accountId = this.$store.getters.getAccountId;
+    if (isSeller == true) {
+      Worker.methods.getSellerItems(accountId).then(res => {
+        this.itemList = res;
+      });
+    } else {
+      Worker.methods.getItems().then(res => {
+        this.itemList = res;
+      });
+    }
   }
 };
 </script>

@@ -40,7 +40,12 @@ export default {
         password: this.password
       };
 
-      Worker.methods.register(request);
+      Worker.methods.register(request).then(res => {
+        this.$store.dispatch("changeToken", res.data.token);
+        this.$store.dispatch("changeRole", res.data.role);
+        this.$store.dispatch("changeAccountId", res.data.id);
+        this.$router.push("Home");
+      });
     }
   }
 };

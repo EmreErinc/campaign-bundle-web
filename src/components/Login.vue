@@ -25,16 +25,21 @@ export default {
   name: "login",
   data: () => ({
     email: "",
-    password: "",
+    password: ""
   }),
   methods: {
     login() {
-        var request = {
-            email: this.email,
-            password: this.password
-        }
+      var request = {
+        email: this.email,
+        password: this.password
+      };
 
-        Worker.methods.login(request);
+      Worker.methods.login(request).then(res => {
+        this.$store.dispatch("changeToken", res.data.token);
+        this.$store.dispatch("changeRole", res.data.role);
+        this.$store.dispatch("changeAccountId", res.data.id);
+        this.$router.push('/');
+      });
     }
   }
 };
